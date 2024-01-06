@@ -57,7 +57,22 @@ def visitCrystal():
     g.wait(3)
     g.dmSlow('Suddenly, you awake again, as though it was all a strange dream.')
 
-#%%CHAPTER 1
+
+def roomOne():
+    g.dm('There is a notebook on the floor, attached to a chain bolted to the floor.')
+    choice = g.makeChoice(['Read notebook','Ignore'])
+
+    if choice == 0:
+        chapterOne()
+
+
+def chapterOne():
+    g.dm("\"I was awakened sometime in the early morning by a loud crash and a stampeding noise from upstairs.  A voice barked some orders, ‘Team One, upstairs and grab him.  Everyone else, stick to the plan.’  Heavy boots clumped up the stairs with surprising speed and before I was awake enough to realize what had happened, there were bright LED lights shining in my face.  The room suddenly seemed very small, with the shapes of a dozen or so large men surrounding me.  I was grabbed and my head was forced onto a dusty-smelling bag.  Hands were everywhere, holding me, sticking needles into me, and half-walking-half-dragging me out of my bedroom and down the bumpy stairs.  My memory is unclear of what happened next, I assume some kind of sedative was applied and I was bundled into a vehicle and carted off.")
+    input('Turn page >')
+    g.dm("\"I awoke again, slowly at first.  The ceiling was closer to my face than I had remembered.  Then I remembered my vivid dream of the night before and sat up.  This wasn’t my bedroom and that wasn’t my ceiling.  These white sheets were not mine and the clinical-looking bedside table I had never seen before.  I rubbed my eyes and looked into a stainless-steel mirror on the wall.  ‘Golly, I’ve either gotten to the age where I’m in an old people’s home and can’t remember how I got there, or that wasn’t a dream I had last night. I wonder if this has anything to do with the –’")
+    input('Turn page >')
+    g.dm("\"As if in answer to my question the door opened abruptly and a pleasant looking man stepped into the room wearing a white lab coat and round glasses.  His hair was slicked back and he had some kind of electronic device cupped over his left ear. He had a red pen tucked behind his other ear and was holding a clipboard underneath his arm.  He took a military step forward and stuck out his hand.  I shook it.  ‘Who …?’\"")
+    g.dm("The rest of the pages of the notebook were torn out.")
 
 #%% NPCs
 
@@ -119,7 +134,6 @@ g.locations = {
     (0,-1,9): g.Setting(' · ',(0,0,9), 'Computer Monitor', 0, computerTalk),
     (0,0,9): g.Spot('[_]','Starting Room', 'You are in a damp, dimly-lit room.', ['key'], [],[]),
     (0,1,9): g.Door(' ╫ ','Red Door', 1),
-
     (0,2,9): g.Spot(' ○ ','Passage', 'You are in a passage.',[],[],[]),
     (0,2,8): g.Spot('═♂ ','Manhole', 'It\'s very dark in here.', [],[],[]),
     (-1,2,8): g.FlatRock('π══','Flat Rock', '', ['gown', 'key', 'map'],['apple'],[]),
@@ -128,7 +142,8 @@ g.locations = {
     (-1,4,9): g.Portal(' ← ',(16,4,9),'Passage'),
     (1,4,9): g.Door('═══','Passage', 0),
     (2,4,9): g.Spot('═╦═','Door 1','You are standing in a passage at the entrance to a doorway.',[],[],[]),
-    (2,3,9): g.Portal(' ↓ ',(0,0,0),'Room 1'),
+    (2,3,9): g.Scene('[ ]', 'Room 1', 'You are standing in a mostly empty room, similar to the one you came from. Instead of a computer monitor on the opposite wall this time, there is a strange apparatus consisting of a tangle of wires attached to a dimly glowing crystal. There is a notebook on the floor.', [], [], [], 0, roomOne),
+    (2,2,9): g.Portal(' ↓ ',(0,0,0),'Apparatus'),
     (3,4,9): g.Door('═══','Passage', 0),
     (4,4,9): g.Spot('═╦═','Door 2','You are standing in a passage at the entrance to a doorway.',[],[],[]),
     (5,4,9): g.Door('═══','Passage', 0),
@@ -228,7 +243,6 @@ g.locations = {
     (2, 3, 5): g.Portal('   ',(2,3,6),'Ladder'),
     (2, 3, 6): g.Spot('[ ]','Tower Top', 'You reach the top of the tower, and there is a glowing crystal above you, with some steps leading up to it.',[],[],[]),
     (2, 3, 7): g.Setting('{ }', (0,0,9), 'Crystal', 0, visitCrystal),
-
     # Open World Row
     (3, 4, 0): g.Spot(' · ','Rainbow Falls', 'A waterfall with water reflecting the colors of a rainbow.', ['rainbow'], [], []),
     (3, 3, 0): g.Spot(' · ','Singing Birds', 'A grove filled with birds singing harmonious melodies.', ['birdsong'], [], []),

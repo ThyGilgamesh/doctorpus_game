@@ -20,7 +20,7 @@ class Player:
         self.chapterDeaths=0
         self.kills=0
         self.strength=1
-        self.chapter=1
+        self.chapter=[]
         self.playerHP=1
         self.inventory=['map', 'compass']
         self.food=[]
@@ -73,8 +73,6 @@ class Spot(Place):
         if NPCs:
             for x in NPCs:
                 x()
-        else:
-            return
 
     def dropLoot(self, item):
         if item in yo.food:
@@ -97,8 +95,6 @@ class Spot(Place):
             dmCompact("That isn't here.")
 
     def describe(self):
-        # yo.visited
-
         if yo.coordinates not in yo.visited:
             dmCompact(self.description)
             yo.visited.append(yo.coordinates)
@@ -108,14 +104,17 @@ class Spot(Place):
         describeSurroundings()
         self.describeItems()
 
+    def describeLong(self):
+        dmCompact(self.description)
+        describeSurroundings()
+        self.describeItems()
+
     def describeItems(self):
         items = [", ".join(filter(None, [", ".join(self.loot), ", ".join(self.supplies)]))]
 
         if items[0]:
             print('-----------------------------------------------------------------------------')
             dmCompact(f'Items: {items[0]}')
-        else:
-            return
 
 
 # Named after the all-containing flat rocks, that appear to any adventurer in time of need.
@@ -136,8 +135,6 @@ class FlatRock(Spot):
         if items[0]:
             print('-----------------------------------------------------------------------------')
             dmCompact(f'In the {self.inshort}: {items[0]}')
-        else:
-            return
 
     def visitFlatRock(self):
         dmCompact(f'On the ground, you see a {self.inshort}.')
@@ -178,8 +175,6 @@ class Tree(FlatRock):
         if items[0]:
             print('-----------------------------------------------------------------------------')
             dmCompact(f'On the ground: {items[0]}')
-        else:
-            return
 
 
 class Door(Place):
@@ -918,8 +913,6 @@ def checkStats():
     dmCompact(f'  Health: {yo.playerHP}')
     if len(yo.inventory) > 0:
         checkInventory()
-    else:
-        return
 
 
 #Below is how I want the dm functions to be, but I think it's uneccesary to do it all the time when I am developing.
@@ -935,7 +928,7 @@ def dm(text, width=70, leftMargin=4, charsPerPrint=4):
         print()
 
 
-def dmSlow(text, width=70, leftMargin=4, charsPerPrint=2):
+def dmSlow(text, width=70, leftMargin=4, charsPerPrint=3):
     wrappedText = textwrap.fill(text, width)
     print()
     for line in wrappedText.splitlines():
@@ -1099,14 +1092,11 @@ def lookAround(location):
     place = locations.get(location)
 
     if place is not None:
-        place.describe()
+        place.describeLong()
 
     if 'telescope' in yo.inventory:
         ahead = lookFarAhead()
         dmCompact(f'Scope: {ahead}')
-    else:
-        return
-
 
 def useTelescope():
     initialBearing = yo.bearing
