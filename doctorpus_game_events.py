@@ -29,12 +29,12 @@ def computerTalk():
     g.dmSlow(f'"Welcome, {g.yo.playerName} #{g.yo.deaths}"')
     g.dm('As you stand in front of the computer, the screen blinks off for a few seconds, then another message appears:')
     g.dmSlow('"What is your name?"')
-    door = g.locations.get((0,2,9))
+    door = g.locations.get((0,1,9))
     print()
-    breakpoint()
     password = input('Type name: ')
     if password == g.yo.playerName:
-        g.dm('The lights flicker brown momentarily, and then you hear a click behind you. You hear the red door behind you creak as it swings slightly ajar.')
+        g.dm('The lights flicker brown momentarily, and then you hear a click behind you.')
+        g.dmSlow('You hear the red door behind you creak as it swings slightly ajar.')
         door.lock = 0
     else:
         g.goBack()
@@ -46,6 +46,16 @@ def computerTalk():
         else:
             g.dm('The worm wraps itself around your head, and the last thing you feel is the wet slime choking you as it burrows its way into your mouth.')
             g.die()
+
+
+def visitCrystal():
+    g.dmCompact("As you approach the crystal, it begins to hum. It pusles purple light.")
+    g.wait(2)
+    g.dm("Everything goes dark, and you feel yourelf being put to sleep as if a switch went off in your head and turned you off. Your body flops to the floor.")
+    g.wait(2)
+    g.dm('You feel as though you are being handled by a writhing swarm of slimy worms, and they put things in your mouth and pull things out of your nose.')
+    g.wait(3)
+    g.dmSlow('Suddenly, you awake again, as though it was all a strange dream.')
 
 #%%CHAPTER 1
 
@@ -91,28 +101,29 @@ g.characters = [
 
 #%% Generic Location attributes
 '''
-(,,): g.Spot('Passage', 'You are in a passage.',[],[],[])
-(,,): g.Spot('Dirt Path', 'You are on a dirt path.',[],[],[])
-(,,): g.Spot('Cobbled Path', 'You are on a cobbled path.',[],[],[])
-(,,): g.Spot('Brick Path', 'You are on a brick path.',[],[],[])
-(,,): g.Spot('Stone Path', 'You are on a stone path.',[],[],[])
-(,,): g.Spot('Rocky Path', 'You are on a rocky path.',[],[],[])
-(,,): g.Spot('Dusty Path', 'You are on a dusty path.',[],[],[])
-(,,): g.Spot('Clay Path', 'You are on a clay path.',[],[],[])
-(,,): g.Spot('Muddy Path', 'You are on a muddy path.',[],[],[])
-(,,): g.Tree(' ♠ ', 'Apple Tree', 'You are at the foot of an apple tree.',[],[],[], 'apple')
+(,,): g.Spot('','Passage', 'You are in a passage.',[],[],[]),
+(,,): g.Spot('','Dirt Path', 'You are on a dirt path.',[],[],[]),
+(,,): g.Spot('','Cobbled Path', 'You are on a cobbled path.',[],[],[]),
+(,,): g.Spot('','Brick Path', 'You are on a brick path.',[],[],[]),
+(,,): g.Spot('','Stone Path', 'You are on a stone path.',[],[],[]),
+(,,): g.Spot('','Rocky Path', 'You are on a rocky path.',[],[],[]),
+(,,): g.Spot('','Dusty Path', 'You are on a dusty path.',[],[],[]),
+(,,): g.Spot('','Clay Path', 'You are on a clay path.',[],[],[]),
+(,,): g.Spot('','Muddy Path', 'You are on a muddy path.',[],[],[]),
+(,,): g.Tree(' ♠ ', 'Apple Tree', 'You are at the foot of an apple tree.',[],[],[], 'apple'),
 '''
 #%% Locations
 
 g.locations = {
     #starting dungeon
-    (0,0,9): g.Setting(' · ',(0,1,9), 'Computer Monitor', 0, computerTalk),
-    (0,1,9): g.Spot('[_]','Starting Room', 'You are in a damp, dimly-lit room.', ['key'], [],[]),
-    (0,2,9): g.Door(' ╫ ','Red Door', 1),
+    (0,-1,9): g.Setting(' · ',(0,0,9), 'Computer Monitor', 0, computerTalk),
+    (0,0,9): g.Spot('[_]','Starting Room', 'You are in a damp, dimly-lit room.', ['key'], [],[]),
+    (0,1,9): g.Door(' ╫ ','Red Door', 1),
 
-    (0,3,9): g.Spot(' ○ ','Passage', 'You are in a passage.',[],[],[]),
-    (0,3,8): g.Spot('═♂ ','Manhole', 'It\'s very dark in here.', [],[],[]),
-    (-1,3,8): g.FlatRock('π══','Flat Rock', '', ['gown', 'key', 'map'],['apple'],[]),
+    (0,2,9): g.Spot(' ○ ','Passage', 'You are in a passage.',[],[],[]),
+    (0,2,8): g.Spot('═♂ ','Manhole', 'It\'s very dark in here.', [],[],[]),
+    (-1,2,8): g.FlatRock('π══','Flat Rock', '', ['gown', 'key', 'map'],['apple'],[]),
+    (0,3,9): g.Door(' ╫ ','Door 0', 1),
     (0,4,9): g.Spot('═╦═','T-Shape','This is the entrance to the passage you came from originally.',[],[],[]),
     (-1,4,9): g.Portal(' ← ',(16,4,9),'Passage'),
     (1,4,9): g.Door('═══','Passage', 0),
@@ -182,8 +193,8 @@ g.locations = {
     # Open World Row
     (0, 4, 0): g.Spot(' · ','Ancient Ruins', 'Ruins of an ancient civilization, mysterious symbols etched into the stones.', ['relic'], [], []),
     (0, 3, 0): g.Spot(' · ','Sunny Meadow', 'A sunny meadow with butterflies fluttering about.', ['butterfly'], [], []),
-    (0, 2, 0): g.Spot(' · ','Whistling Wind', 'The wind whistles through the tall grass, creating a soothing melody.', [], [], []),
-    (0, 1, 0): g.Spot(' · ','Giant Oak', 'A giant oak tree with branches reaching for the sky.', ['acorn'], [], []),
+    (0, 2, 0): g.Spot(' ┌─','Dirt Path', 'You are on a dirt path.',[],[],[]),
+    (0, 1, 0): g.Spot(' │ ', 'Dirt Path', 'You are on a dirt path.',[],[],[]),
     (0, 0, 0): g.Spot(' · ','Grassy Knoll', 'You are standing on top of a grassy knoll.', [], [], []),
     (0, -1, 0): g.Spot(' · ','Tranquil Lake', 'A tranquil lake with crystal-clear water reflecting the surrounding landscape.', ['pebble'], [], []),
     (0, -2, 0): g.Spot(' · ','Willow Tree', 'A majestic willow tree with long, sweeping branches.', ['willow leaf'], [], []),
@@ -192,7 +203,7 @@ g.locations = {
     # Open World Row
     (1, 4, 0): g.Spot(' · ','Dragon\'s Lair', 'A cave entrance with carvings resembling dragon scales.', ['dragonscale'], [], []),
     (1, 3, 0): g.Spot(' · ','Eagle\'s Nest', 'A high cliff with an eagle\'s nest perched at the top.', ['feather'], [], []),
-    (1, 2, 0): g.Spot(' · ','Glowing Mushrooms', 'A cluster of mushrooms emitting a soft glow in the dark.', ['mushroom'], [], []),
+    (1, 2, 0): g.Spot('───','Dirt Path', 'You are on a dirt path.',[],[],[]),
     (1, 1, 0): g.Spot(' · ','Waterfall Cave', 'A hidden cave behind a waterfall, the sound of water echoing inside.', ['echo'], [], []),
     (1, 0, 0): g.Spot(' · ','Bamboo Grove', 'A serene grove with tall bamboo shoots swaying in the breeze.', ['shoot'], [], []),
     (1, -1, 0): g.Spot(' · ','Crystal Clear Creek', 'A creek with crystal-clear water flowing over smooth stones.', ['water'], [], []),
@@ -201,14 +212,23 @@ g.locations = {
     (1, -4, 0): g.Spot(' · ','Stone Circle', 'A mysterious circle of standing stones with ancient carvings.', ['stone'], [], []),
     # Open World Row
     (2, 4, 0): g.Spot(' · ','Moss-Covered Bridge', 'A moss-covered bridge spanning a narrow river.', ['moss'], [], []),
-    (2, 3, 0): g.Spot(' · ','Firefly Grove', 'A grove filled with fireflies, creating a magical display of lights.', ['firefly'], [], []),
-    (2, 2, 0): g.Spot(' · ','Sunset Cliff', 'A cliff with a breathtaking view of the sunset over the horizon.', [], [], []),
+    (2, 3, 0): g.Spot('█▀█','Dark Tower', 'You step inside the tower door and see a ladder going up.', [], [], []),
+    (2, 2, 0): g.Spot('─┘ ','Dirt Path', 'You are on a dirt path.',[],[],[]),
     (2, 1, 0): g.Tree(' ♠ ', 'Apple Tree', 'You are at the foot of an apple tree.',[],[],[], 'apple'),
     (2, 0, 0): g.Spot(' · ','Enchanted Forest', 'A forest with trees that seem to whisper secrets to those who listen closely.', [], [], []),
     (2, -1, 0): g.Spot(' · ','Giant\'s Footprint', 'A mysterious giant footprint imprinted in the ground.', ['footprint'], [], []),
     (2, -2, 0): g.Spot(' · ','Gentle Breeze', 'A place where a gentle breeze always seems to blow.', ['breeze'], [], []),
     (2, -3, 0): g.Spot(' · ','Golden Fields', 'Fields of golden wheat swaying in the wind.', ['golden wheat'], [], []),
     (2, -4, 0): g.Spot(' · ','Starlit Sky', 'An open area with a perfect view of the starlit sky at night.', ['starlight'], [], []),
+    # Dark Tower
+    (2, 3, 1): g.Portal('   ',(2,3,2),'Ladder'),
+    (2, 3, 2): g.Spot('[ ]','Tower Room', 'The ladder leads to a stone room, and there is another ladder above.',[],[],[]),
+    (2, 3, 3): g.Portal('   ',(2,3,4),'Ladder'),
+    (2, 3, 4): g.Spot('[ ]','Tower Room', 'The ladder leads to a stone room, and there is another ladder above.',[],[],[]),
+    (2, 3, 5): g.Portal('   ',(2,3,6),'Ladder'),
+    (2, 3, 6): g.Spot('[ ]','Tower Top', 'You reach the top of the tower, and there is a glowing crystal above you, with some steps leading up to it.',[],[],[]),
+    (2, 3, 7): g.Setting('{ }', (0,0,9), 'Crystal', 0, visitCrystal),
+
     # Open World Row
     (3, 4, 0): g.Spot(' · ','Rainbow Falls', 'A waterfall with water reflecting the colors of a rainbow.', ['rainbow'], [], []),
     (3, 3, 0): g.Spot(' · ','Singing Birds', 'A grove filled with birds singing harmonious melodies.', ['birdsong'], [], []),

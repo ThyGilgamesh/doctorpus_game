@@ -28,10 +28,10 @@ class Player:
         self.visited=[]
         self.avatarName=''
         self.bearing=(-1,0,0)
-        self.coordinates=(0,1,9)
-        self.respawnPoint=(0,1,9)
+        self.coordinates=(0,0,9)
+        self.respawnPoint=(0,0,9)
         self.tick=0
-        self.lastPlace=(0,1,9)
+        self.lastPlace=(0,0,9)
 
 yo = Player()
 
@@ -674,7 +674,7 @@ def wander():
 
 
 def start():
-    yo.coordinates = (0,1,9)
+    yo.coordinates = (0,0,9)
 
     if 'map' in yo.inventory:
         yo.inventory.remove('map')
