@@ -230,5 +230,3 @@ g.locations = {
     (4, -3, 0): g.Spot(' · ','Galactic Garden', 'A garden with plants from distant galaxies, each with unique properties.', ['flower'], [], []),
     (4, -4, 0): g.Spot(' · ','Infinity Pool', 'A pool with water that extends infinitely into the unknown.', [], [], []),
 }
-
-g.start()
