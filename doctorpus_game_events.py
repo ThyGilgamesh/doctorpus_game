@@ -231,4 +231,4 @@ g.locations = {
     (4, -4, 0): g.Spot(' · ','Infinity Pool', 'A pool with water that extends infinitely into the unknown.', [], [], []),
 }
 
-# g.start()
+g.start()
