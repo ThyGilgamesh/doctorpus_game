@@ -556,7 +556,8 @@ def saveGame():
         'yo.avatarName': yo.avatarName,
         'yo.bearing': yo.bearing,
         'yo.coordinates': yo.coordinates,
-        'yo.respawnPoint': yo.respawnPoint
+        'yo.respawnPoint': yo.respawnPoint,
+        'yo.lastPlace': yo.lastPlace
     }
 
     saveDirectory = os.path.join(Path.home(), 'DoctopusTextAdventureSavesModule')
@@ -595,6 +596,7 @@ def loadGame():
         yo.bearing = gameState['yo.bearing']
         yo.coordinates = gameState['yo.coordinates']
         yo.respawnPoint = gameState['yo.respawnPoint']
+        yo.lastPlace = gameState['yo.lastPlace']
 
         print(f"Game loaded from: {savePath}")
 
@@ -607,6 +609,7 @@ def loadGame():
     except Exception as e:
         print(f"Error loading game: {e}. Start a new game.")
         raise e
+        start()
 
 #%%Basic game functions
 
