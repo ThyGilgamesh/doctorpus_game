@@ -558,7 +558,8 @@ def saveGame():
         'yo.lastPlace': yo.lastPlace
     }
 
-    saveDirectory = os.path.join(Path.home(), 'DoctopusTextAdventureSavesModule')
+    saveDirectory = os.path.join(os.path.expanduser('~'), 'DoctopusTextAdventureSavesModule')
+
     os.makedirs(saveDirectory, exist_ok=True)
 
     savePath = os.path.join(saveDirectory, 'DoctopusSaveModule.pkl')
@@ -571,7 +572,8 @@ def saveGame():
 def loadGame():
     global locations, characters
 
-    saveDirectory = os.path.join(Path.home(), 'DoctopusTextAdventureSavesModule')
+    saveDirectory = os.path.join(os.path.expanduser('~'), 'DoctopusTextAdventureSavesModule')
+
     savePath = os.path.join(saveDirectory, 'DoctopusSaveModule.pkl')
 
     try:
