@@ -142,6 +142,7 @@ class FlatRock(Spot):
 
         if choice == 0:
             dmCompact(f'You open the {self.inshort}.')
+            self.describeItems()
         else:
             goBack()
 
@@ -158,11 +159,12 @@ class Tree(FlatRock):
         if choice == 0:
             dmCompact('You shake the tree, and a fruit hits you on the head.')
             self.supplies.append(self.fruit)
+            self.describeItems()
         else:
             goBack()
 
     def describe(self):
-        # dmCompact(self.description)
+        dmCompact(self.description)
         if yo.coordinates in yo.visited:
             yo.visited.remove(yo.coordinates)
 
