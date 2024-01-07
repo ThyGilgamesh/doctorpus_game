@@ -17,7 +17,6 @@ class Player:
     def __init__(self):
         self.coin=1
         self.deaths=0
-        self.chapterDeaths=0
         self.kills=0
         self.strength=1
         self.chapter=[]
@@ -114,7 +113,7 @@ class Spot(Place):
 
         if items[0]:
             print('-----------------------------------------------------------------------------')
-            dmCompact(f'Items: {items[0]}')
+            dmCompact(f'On the ground: {items[0]}')
 
 
 # Named after the all-containing flat rocks, that appear to any adventurer in time of need.
@@ -545,7 +544,6 @@ def saveGame():
         'locations': locations,
         'characters': characters,
         'yo.deaths': yo.deaths,
-        'yo.chapterDeaths': yo.chapterDeaths,
         'yo.kills': yo.kills,
         'yo.strength': yo.strength,
         'yo.chapter': yo.chapter,
@@ -584,7 +582,6 @@ def loadGame():
         locations = gameState['locations']
         characters = gameState['characters']
         yo.deaths = gameState['yo.deaths']
-        yo.chapterDeaths = gameState['yo.chapterDeaths']
         yo.kills = gameState['yo.kills']
         yo.strength = gameState['yo.strength']
         yo.chapter = gameState['yo.chapter']
@@ -876,6 +873,7 @@ def turn(direction):
         else:
             dmCompact("If only there was some kind of device to tell you what direction that is.")
     else:
+        dmCompact('Invalid direction')
         turnExplicit()
 
 
@@ -1034,7 +1032,7 @@ def checkIfCommand(text):
     command = text.split()
 
     if any(word in command for word in ['exit']):
-        endgame()
+        reallyExit()
     elif any(word in command for word in ['save']):
         saveGame()
     elif any(word in command for word in ['die', 'suicide']):
@@ -1102,19 +1100,15 @@ def lookAround(location):
         dmCompact(f'Scope: {ahead}')
 
 def useTelescope():
-    initialBearing = yo.bearing
-
-    scopeDirection = input('Use telescope in which direction? ')
-    turn(scopeDirection)
-
-    whatYouSee = lookFarAhead()
-
     if 'telescope' in yo.inventory:
-        dmCompact(f'You see: {whatYouSee}')
+        scopeDirection = input('Use telescope in which direction? ')
+        turn(scopeDirection)
+
+        whatYouSee = lookFarAhead()
+
+        dmCompact(f'Scope: {whatYouSee}')
     else:
         dmCompact("You don't have a telescope.")
-
-    yo.bearing = initialBearing
 
 
 def showInstructions():
@@ -1232,7 +1226,6 @@ def die():
     dmSlow(randomMessage)
 
     yo.deaths += 1
-    yo.chapterDeaths += 1
     checkStats()
     yo.tick = 0
     yo.playerHP = yo.strength ** 2
@@ -1599,6 +1592,16 @@ def generateMap(center_coordinates):
 def whereNPC():
     for x in characters.copy():
         print(f'{x.name} {x.currentLocation}')
+
+
+def reallyExit():
+    dmCompact('Do you want to exit the game?')
+    choice = forceChoice(['Yes, exit the game','No, exit the area'])
+
+    if choice == 0:
+        endgame()
+    else:
+        goBack()
 
 
 def endgame():
