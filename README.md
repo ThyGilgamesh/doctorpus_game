@@ -1,0 +1,1 @@
+This is a text adventure game I've been working on for three reasons: The first is to learn how to design a game, the second is to get better at using python, and the third is to implement a sci-fi story I came up with a while ago.
