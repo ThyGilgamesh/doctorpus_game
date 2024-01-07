@@ -126,7 +126,6 @@ class FlatRock(Spot):
         print('=============================================================================')
 
         self.visitFlatRock()
-        self.describe()
 
         self.npcScenario()
 
@@ -884,7 +883,6 @@ def enterDoor():
 
 # Once I set up the open world, I will need this. The idea is I can use the goBack()  function to lock the player to an area.
 def goBack():
-    dmCompact("You can't go there.")
     yo.coordinates = yo.lastPlace
     describeSurroundings()
 
@@ -1472,6 +1470,7 @@ def visitPlace(location):
     if place is not None:
         place()
     else:
+        dmCompact("You can't go there.")
         goBack()
 
 
