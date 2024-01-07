@@ -1127,7 +1127,7 @@ def showInstructions():
         input('Press Enter for another tip.')
         dm('BE SPECIFIC: Keep in mind that the game only checks for keywords in your input, so sometimes it will ask you to specify something. When the game asks you for a specification, such as "What would you like to eat?" make sure reply with the item spelt exactly how it is spelt in your inventory. To view your inventory, type the word "inventory"')
         input('Press Enter for another tip.')
-        dm('FINDING YOUR WAY: There are three items that will help you find your way: the compass, the map, and the telescope. If you have a compass, you will be able to check your yo.bearing and explicitly tell the game what direction you want to go in terms of north, south, east, and west. If you have a map, you will be able to use the command "map" to see a map of your surroundings. If you have a map AND a compass, the yo.coordinates of your current location will appear to the bottom right of the description; additionally, the icon showing the player\'s location on the map will appear as an arrow pointing in the direction that you are facing. If you have a telescope, you will be able to use the "telescope" or "scope" command to look at the three tiles beyond adjacent tiles.')
+        dm('FINDING YOUR WAY: There are three items that will help you find your way: the compass, the map, and the telescope. If you have a compass, you will be able to check your bearing and explicitly tell the game what direction you want to go in terms of north, south, east, and west. If you have a map, you will be able to use the command "map" to see a map of your surroundings. If you have a map AND a compass, the coordinates of your current location will appear to the bottom right of the description; additionally, the icon showing the player\'s location on the map will appear as an arrow pointing in the direction that you are facing. If you have a telescope, you will be able to use the "telescope" or "scope" command to look at the three tiles beyond adjacent tiles.')
         input('Press Enter for another tip.')
         dm('HINT: The arrows next to where you type tell you whether you have an unresolved choice waiting to be decided. If there is only one arrow, that means you can only input numbers. If there are two arrows, it means there is an unresolved choice, but you may input either numbers or commands. If there are three arrows, you can only input commands.')
     elif choice == 1:
@@ -1148,7 +1148,7 @@ def showInstructions():
         dmCompact('r - rotate on the spot -- when prompted use direction shortcuts or commands.')
 
         dm('DIRECTIONS (REQUIRES COMPASS):')
-        dmCompact('h - check yo.bearing (tells you what direction you are facing)')
+        dmCompact('h - check bearing (tells you what direction you are facing)')
         dmCompact('i - go North')
         dmCompact('k - go South')
         dmCompact('l - go East')
@@ -1283,16 +1283,19 @@ def take(text):
 def takeExplicit():
     global locations
     place = locations.get(yo.coordinates)
-    item = input('What would you like to take? ').lower()
+    item = input('What would you like to take? ').lower().split()
 
-    items_to_take = item.split()
+    items_to_take = item
 
-    if any(item in place.supplies or item in place.loot for item in items_to_take):
-        takeItem(items_to_take)
-    elif any(word in ['all', 'everything', 'the lot', 'g'] for word in items_to_take):
-        takeItem('all')
+    if not place.loot and not place.supplies:
+        dmCompact('There\'s nothing here to take.')
     else:
-        dmCompact('That isn\'t here.')
+        if any(item in place.supplies or item in place.loot for item in items_to_take):
+            take(items_to_take)
+        elif any(word in ['all', 'everything', 'the lot', 'g'] for word in items_to_take):
+            take('all')
+        else:
+            dmCompact('That isn\'t here.')
 
 
 def takeItem(item):
