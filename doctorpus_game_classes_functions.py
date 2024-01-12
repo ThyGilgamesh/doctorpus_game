@@ -9,7 +9,7 @@ import random
 import textwrap
 import pickle
 import os
-from pathlib import Path
+import numpy as np
 
 #%%Classes
 
@@ -549,6 +549,7 @@ def saveGame():
         'yo.chapter': yo.chapter,
         'yo.playerHP': yo.playerHP,
         'yo.inventory': yo.inventory,
+        'yo.food': yo.food,
         'yo.playerName': yo.playerName,
         'yo.visited': yo.visited,
         'yo.avatarName': yo.avatarName,
@@ -589,6 +590,7 @@ def loadGame():
         yo.chapter = gameState['yo.chapter']
         yo.playerHP = gameState['yo.playerHP']
         yo.inventory = gameState['yo.inventory']
+        yo.food = gameState['yo.food']
         yo.playerName = gameState['yo.playerName']
         yo.visited = gameState['yo.visited']
         yo.avatarName = gameState['yo.avatarName']
@@ -611,6 +613,9 @@ def loadGame():
         start()
 
 #%%Basic game functions
+def seededRandom(seed, size):
+    np.random.seed(seed)
+    return np.random.rand(size)
 
 
 def randomVector(directions):
@@ -1541,6 +1546,8 @@ def describeSurroundings():
                 dmCompact(f'{direction} {location}')
                 if npc_info:
                     print(f'           {", ".join(filter(None, npc_info))}')
+    else:
+        dmCompact('Nothing more to see. Try turning around.')
 
 
 def generateMap(center_coordinates):
